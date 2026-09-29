@@ -32,6 +32,23 @@ Ros Slam Robot is a two-wheeled ROS 2 Humble learning robot built around a Raspb
 - Provides launch files for `slam_toolbox`, Nav2 and RPLIDAR.
 - Robot ölçüleri, portlar ve hız sınırları YAML üzerinden ayarlanabilir.
 - Keeps dimensions, ports and speed limits configurable through YAML files.
+- Seri motor köprüsü ve odometri hesabı performans için C++ ile yazılmıştır.
+- The serial motor bridge and odometry calculation are implemented in C++ for performance.
+- Donanımsız simülasyon ve odometri izleme araçları Python ile yazılmıştır.
+- Hardware-free simulation and odometry monitoring tools are implemented in Python.
+
+## Yazılım yapısı / Software architecture
+
+- `src/serial_base.cpp`: Arduino haberleşmesi ve ROS 2 odometrisi.
+- `src/serial_base.cpp`: Arduino communication and ROS 2 odometry.
+- `src/kinematics.cpp`: Diferansiyel sürüş matematiği.
+- `src/kinematics.cpp`: Differential-drive mathematics.
+- `scripts/fake_base.py`: Gerçek robot olmadan hareket simülasyonu.
+- `scripts/fake_base.py`: Motion simulation without physical hardware.
+- `scripts/odom_monitor.py`: Odometri ve lidar sağlık izleyicisi.
+- `scripts/odom_monitor.py`: Odometry and lidar health monitor.
+- `launch/`: Python tabanlı robot, SLAM ve Nav2 başlatma dosyaları.
+- `launch/`: Python launch files for the robot, SLAM and Nav2.
 
 ## Gereksinimler / Requirements
 
@@ -51,7 +68,6 @@ sudo apt install -y \
   ros-humble-slam-toolbox \
   ros-humble-rplidar-ros \
   ros-humble-xacro \
-  python3-serial \
   python3-colcon-common-extensions
 ```
 

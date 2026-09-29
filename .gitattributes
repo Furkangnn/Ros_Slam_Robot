@@ -1,0 +1,4 @@
+# Keep GitHub's language chart focused on executable source code.
+CMakeLists.txt linguist-vendored
+udev/** linguist-vendored
+*.ino linguist-language=C++
