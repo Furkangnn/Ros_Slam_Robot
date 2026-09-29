@@ -1,0 +1,14 @@
+build/
+install/
+log/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+.vscode/
+*.swp
+*~
+
+# Unrelated applications already present in the workspace
+/api/
+/web/

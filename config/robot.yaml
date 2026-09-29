@@ -1,0 +1,9 @@
+serial_base:
+  ros__parameters:
+    port: /dev/ttyUSB_ARDUINO
+    baudrate: 115200
+    wheel_radius: 0.033
+    wheel_separation: 0.225
+    ticks_per_revolution: 600
+    command_timeout: 0.5
+    publish_tf: true

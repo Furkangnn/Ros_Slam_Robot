@@ -1,0 +1,3 @@
+# Replace the example vendor/product IDs with values from: udevadm info --attribute-walk
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2341", ATTRS{idProduct}=="0043", SYMLINK+="ttyUSB_ARDUINO", MODE="0660", GROUP="dialout"
+SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", SYMLINK+="ttyUSB_LIDAR", MODE="0660", GROUP="dialout"
