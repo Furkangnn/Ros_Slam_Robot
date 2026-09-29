@@ -96,3 +96,94 @@ colcon test-result --verbose
 ## Lisans
 
 Bu projenin özgün kodu MIT Lisansı ile yayımlanır. ROS 2 paketleri ve donanım sürücüleri kendi lisanslarına tabidir.
+
+---
+
+## English
+
+Ros Slam Robot is a two-wheeled ROS 2 Humble learning robot built around a Raspberry Pi 4, an Arduino UNO and an RPLIDAR A1. This repository provides an original differential-drive controller, serial motor bridge, robot model, SLAM configuration and Nav2 launch setup.
+
+> The code and documentation were written from scratch for this repository. Verify motor directions, wheel dimensions and serial-port settings on your own hardware before driving the robot.
+
+### Features
+
+- Converts `/cmd_vel` commands into left and right wheel velocities.
+- Uses a simple, readable serial protocol to communicate with the Arduino.
+- Publishes `/odom` and the `odom -> base_link` transform from encoder data.
+- Includes a Xacro-based two-wheeled robot model.
+- Provides launch files for `slam_toolbox`, Nav2 and RPLIDAR.
+- Keeps dimensions, ports and speed limits configurable through YAML files.
+
+### Requirements
+
+- Ubuntu 22.04 and ROS 2 Humble
+- Raspberry Pi 4
+- Arduino UNO-compatible board
+- Two DC motors with encoders
+- Motor driver
+- RPLIDAR A1
+
+```bash
+sudo apt update
+sudo apt install -y \
+  ros-humble-desktop \
+  ros-humble-navigation2 \
+  ros-humble-nav2-bringup \
+  ros-humble-slam-toolbox \
+  ros-humble-rplidar-ros \
+  ros-humble-xacro \
+  python3-serial \
+  python3-colcon-common-extensions
+```
+
+### Installation
+
+```bash
+mkdir -p ~/ros_slam_ws/src
+cd ~/ros_slam_ws/src
+git clone https://github.com/Furkangnn/Ros_Slam_Robot.git
+cd ..
+rosdep install --from-paths src --ignore-src -r -y
+colcon build --symlink-install
+source install/setup.bash
+```
+
+Upload `firmware/ros_slam_motor_controller/ros_slam_motor_controller.ino` to the Arduino. Then edit the device IDs in `udev/99-ros-slam-robot.rules` to match your hardware.
+
+### Usage
+
+Start the robot and lidar:
+
+```bash
+ros2 launch ros_slam_robot robot.launch.py
+```
+
+Start mapping:
+
+```bash
+ros2 launch ros_slam_robot slam.launch.py
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 run nav2_map_server map_saver_cli -f ~/robot_map
+```
+
+Navigate using a saved map:
+
+```bash
+ros2 launch ros_slam_robot navigation.launch.py map:=$HOME/robot_map.yaml
+```
+
+### Serial protocol
+
+The Raspberry Pi sends `V <left_mps> <right_mps>` to the Arduino at 20 Hz. The Arduino replies with `E <left_ticks> <right_ticks>`. Both sides stop the motors if the connection times out.
+
+### Testing
+
+```bash
+cd ~/ros_slam_ws
+colcon test --packages-select ros_slam_robot
+colcon test-result --verbose
+```
+
+### License
+
+The original code in this repository is released under the MIT License. ROS 2 packages and hardware drivers remain subject to their respective licenses.
