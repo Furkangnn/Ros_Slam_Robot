@@ -43,10 +43,14 @@ Ros Slam Robot is a two-wheeled ROS 2 Humble learning robot built around a Raspb
 - `src/serial_base.cpp`: Arduino communication and ROS 2 odometry.
 - `src/kinematics.cpp`: Diferansiyel sürüş matematiği.
 - `src/kinematics.cpp`: Differential-drive mathematics.
+- `src/robot_health.cpp`: Odometri, lidar ve engel mesafesi tanılama düğümü.
+- `src/robot_health.cpp`: Diagnostics node for odometry, lidar and obstacle clearance.
 - `scripts/fake_base.py`: Gerçek robot olmadan hareket simülasyonu.
 - `scripts/fake_base.py`: Motion simulation without physical hardware.
 - `scripts/odom_monitor.py`: Odometri ve lidar sağlık izleyicisi.
 - `scripts/odom_monitor.py`: Odometry and lidar health monitor.
+- `scripts/scan_quality.py`: Lidar kapsama ve kararlılık ölçüm aracı.
+- `scripts/scan_quality.py`: Lidar coverage and stability measurement tool.
 - `launch/`: Python tabanlı robot, SLAM ve Nav2 başlatma dosyaları.
 - `launch/`: Python launch files for the robot, SLAM and Nav2.
 

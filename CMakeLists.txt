@@ -6,9 +6,11 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(diagnostic_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(sensor_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 
@@ -30,7 +32,16 @@ ament_target_dependencies(serial_base
   tf2_ros
 )
 
-install(TARGETS robot_kinematics serial_base
+add_executable(robot_health src/robot_health.cpp)
+target_compile_features(robot_health PUBLIC cxx_std_17)
+ament_target_dependencies(robot_health
+  diagnostic_msgs
+  nav_msgs
+  rclcpp
+  sensor_msgs
+)
+
+install(TARGETS robot_kinematics serial_base robot_health
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
@@ -40,6 +51,7 @@ install(DIRECTORY config launch urdf DESTINATION share/${PROJECT_NAME})
 install(PROGRAMS
   scripts/fake_base.py
   scripts/odom_monitor.py
+  scripts/scan_quality.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
